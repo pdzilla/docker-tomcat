@@ -5,10 +5,6 @@ ENV CATALINA_HOME="/usr/local/tomcat"
 ENV PATH=$CATALINA_HOME/bin:$PATH
 RUN mkdir -p "$CATALINA_HOME"
 
-#Add the tomcat version with configs 
-#need to figure out if war files should be auto-deploy or manual-deploy via manager
-#ADD ./ $CATALINA_HOME
-
 WORKDIR $CATALINA_HOME
 
 # Build on Red, Blue or Agile for internets
@@ -20,6 +16,7 @@ RUN set -x \
 	&& tar -xvf tomcat.tar.gz --strip-components=1 \
 	&& rm bin/*.bat \
 	&& rm tomcat.tar.gz
+RUN sed -i 's|</tomcat-users>|<role rolename=\"admin\" />\n<user username=\"admin\" password=\"password\" roles=\"standard,manager,admin,manager-gui,manager-status,manager-script\"/>\n</tomcat-users>|' $CATALINA_HOME/conf/tomcat-users.xml
 
 EXPOSE 8080
 
