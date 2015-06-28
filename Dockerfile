@@ -16,7 +16,7 @@ RUN set -x \
 	&& tar -xvf tomcat.tar.gz --strip-components=1 \
 	&& rm bin/*.bat \
 	&& rm tomcat.tar.gz
-RUN sed -i 's|</tomcat-users>|<role rolename=\"admin\" />\n<user username=\"admin\" password=\"password\" roles=\"standard,manager,admin,manager-gui,manager-status,manager-script\"/>\n</tomcat-users>|' $CATALINA_HOME/conf/tomcat-users.xml
+RUN sed -i 's|</tomcat-users>|<role rolename=\"admin\" />\n<user username=\"admin\" password=\"password\" roles=\"standard,manager,admin,admin-gui,manager-gui,manager-status,manager-script\"/>\n</tomcat-users>|' $CATALINA_HOME/conf/tomcat-users.xml
 
 EXPOSE 8080
 
