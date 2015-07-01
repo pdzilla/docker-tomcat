@@ -20,11 +20,20 @@ The following environment variables are exposed (default values indicated):
 * CATALINA_HOME (/usr/local/tomcat)
 * PATH ($CATALINA_HOME/bin:$PATH)
 * TOMCAT_ENV (`local` if not specified). This value is used in the setenv.sh file (passed as `-Denv`)
+* MANAGER_USER (admin)
+* MANAGER_PW (password)
 
+Examples:
+All defaults:
+`docker run -d -p 8080:8080 falcon-tomcat`
+
+
+Defaults with different Manager login:
+`docker run -d -p 8080:8080 -e "MANAGER_USER=<user>" -e "MANAGER_PW=<pw>" --name tomcat falcon-tomcat`
 
 
 ## Current limitations
-1. Does not add the 'admin-gui' or 'admin-script' role to use the "Host Manager" feature.
-2. Has a hard-coded username and password for the manager app.
-3. Configured for HTTP not HTTPS with no automated way to change it in the Dockerfile.
+1. Does not add the 'admin-script' role to use the "Host Manager" feature.
+2. Configured for HTTP not HTTPS with no automated way to change it in the Dockerfile.
+3. Tomcat JVM memory settings not currently configurable (512 min 1024 max)
 

@@ -16,7 +16,14 @@ RUN set -x \
 	&& tar -xvf tomcat.tar.gz --strip-components=1 \
 	&& rm bin/*.bat \
 	&& rm tomcat.tar.gz
-RUN sed -i 's|</tomcat-users>|<role rolename=\"admin\" />\n<user username=\"admin\" password=\"password\" roles=\"standard,manager,admin,admin-gui,manager-gui,manager-status,manager-script\"/>\n</tomcat-users>|' $CATALINA_HOME/conf/tomcat-users.xml
+
+### remove the closing tag, then use the echo|tee pattern to build it back in
+RUN sed -i 's|</tomcat-users>| |' $CATALINA_HOME/conf/tomcat-users.xml
+RUN echo "<role rolename=\"admin\" />" | tee -a $CATALINA_HOME/conf/tomcat-users.xml \
+	&& echo "<user username=\"${MANAGER_USER:-admin}\" password=\"${MANAGER_PW:-password}\" roles=\"standard,manager,admin,admin-gui,manager-gui,manager-status,manager-script\"/>" | tee -a $CATALINA_HOME/conf/tomcat-users.xml \
+	&& echo "</tomcat-users>" | tee -a $CATALINA_HOME/conf/tomcat-users.xml
+
+### setup setenv.sh
 RUN echo "CATALINA_PID=\"\$CATALINA_HOME/bin/catalina.pid\"" | tee $CATALINA_HOME/bin/setenv.sh
 RUN echo "CATALINA_OPTS=\"\$CATALINA_OPTS -Xms512m -Xmx1024m -Denv=${TOMCAT_ENV:-local} \
   -Dlogging_override=file://$CATALINA_HOME/servicebus_logging_override.xml \
