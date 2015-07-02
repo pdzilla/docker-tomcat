@@ -11,6 +11,7 @@ WORKDIR $CATALINA_HOME
 ENV TOMCAT_MAJOR 8
 ENV TOMCAT_VERSION 8.0.20
 ENV TOMCAT_DL_URL http://archive.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
+ENV TOMCAT_ENV local
 RUN set -x \
 	&& curl -fSL "$TOMCAT_DL_URL" -o tomcat.tar.gz \
 	&& tar -xvf tomcat.tar.gz --strip-components=1 \
@@ -25,7 +26,7 @@ RUN echo "<role rolename=\"admin\" />" | tee -a $CATALINA_HOME/conf/tomcat-users
 
 ### setup setenv.sh
 RUN echo "CATALINA_PID=\"\$CATALINA_HOME/bin/catalina.pid\"" | tee $CATALINA_HOME/bin/setenv.sh
-RUN echo "CATALINA_OPTS=\"\$CATALINA_OPTS -Xms512m -Xmx1024m -Denv=${TOMCAT_ENV:-local} \
+RUN echo "CATALINA_OPTS=\"\$CATALINA_OPTS -Xms512m -Xmx1024m -Denv=\$TOMCAT_ENV \
   -Dlogging_override=file://$CATALINA_HOME/servicebus_logging_override.xml \
   -Doverride_file=$CATALINA_HOME/servicebus_override.properties\"" | \
   	tee -a $CATALINA_HOME/bin/setenv.sh \
