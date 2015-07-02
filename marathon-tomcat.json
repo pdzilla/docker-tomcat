@@ -2,7 +2,8 @@
 	"container": {
     "type": "DOCKER",
     "docker": {
-      "image": "pdzilla/tomcat:8.0.20",
+      "image": "pdzilla/tomcat:latest",
+      "forcePullImage": true,
       "network": "BRIDGE",
       "privileged": false,
       "portMappings": [

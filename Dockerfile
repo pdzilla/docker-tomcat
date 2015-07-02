@@ -26,7 +26,7 @@ RUN echo "<role rolename=\"admin\" />" | tee -a $CATALINA_HOME/conf/tomcat-users
 
 ### setup setenv.sh
 RUN echo "CATALINA_PID=\"\$CATALINA_HOME/bin/catalina.pid\"" | tee $CATALINA_HOME/bin/setenv.sh
-RUN echo "CATALINA_OPTS=\"\$CATALINA_OPTS -Xms512m -Xmx1024m -Denv=\$TOMCAT_ENV \
+RUN echo "CATALINA_OPTS=\"\$CATALINA_OPTS -Xms512m -Xmx1024m -Denv=$TOMCAT_ENV \
   -Dlogging_override=file://$CATALINA_HOME/servicebus_logging_override.xml \
   -Doverride_file=$CATALINA_HOME/servicebus_override.properties\"" | \
   	tee -a $CATALINA_HOME/bin/setenv.sh \
