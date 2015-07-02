@@ -1,5 +1,5 @@
-# Falcon-Tomcat
-Docker repo for a Falcon Tomcat-based container.
+# Docker-Tomcat
+Docker repo for a Tomcat-based container.
 
 # Usage
 This Dockerfile with all default values will build a base container running Apache Tomcat version 8.0.20 with OpenJDK 8u40.
@@ -25,11 +25,11 @@ The following environment variables are exposed (default values indicated):
 
 Examples:
 All defaults:
-`docker run -d -p 8080:8080 falcon-tomcat`
+`docker run -d -p 8080:8080 pdzilla/tomcat`
 
 
 Defaults with different Manager login:
-`docker run -d -p 8080:8080 -e "MANAGER_USER=<user>" -e "MANAGER_PW=<pw>" --name tomcat falcon-tomcat`
+`docker run -d -p 8080:8080 -e "MANAGER_USER=<user>" -e "MANAGER_PW=<pw>" --name tomcat pdzilla/tomcat`
 
 
 ## Current limitations
