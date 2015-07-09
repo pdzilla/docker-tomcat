@@ -1,3 +1,5 @@
+[![](https://badge.imagelayers.io/pdzilla/tomcat:latest.svg)](https://imagelayers.io/?images=pdzilla/tomcat:latest 'Get your own badge on imagelayers.io')
+
 # Docker-Tomcat
 Docker repo for a Tomcat-based container. This Dockerfile has no external files to copy or add, so it can be used as a standalone file to get up and running.
 
