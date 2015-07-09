@@ -3,9 +3,7 @@ MAINTAINER Patrick Davis <patrick_davis@cable.comcast.com>
 
 ENV CATALINA_HOME="/usr/local/tomcat" 
 ENV PATH=$CATALINA_HOME/bin:$PATH
-RUN mkdir -p "$CATALINA_HOME" \
-	&& useradd -m -d $CATALINA_HOME -s /bin/bash tomcat \
-	&& usermod -aG root tomcat
+RUN mkdir -p "$CATALINA_HOME"
 
 WORKDIR $CATALINA_HOME
 
@@ -33,9 +31,6 @@ RUN echo "CATALINA_OPTS=\"\$CATALINA_OPTS -Xms512m -Xmx1024m -Denv=\$TOMCAT_ENV\
   	tee -a $CATALINA_HOME/bin/setenv.sh \
 	&& chmod 755 $CATALINA_HOME/bin/setenv.sh
 
-### empower user tomcat
-RUN chown -R tomcat:tomcat $CATALINA_HOME
-
 EXPOSE 8080
-USER tomcat
+
 CMD ["catalina.sh", "run"]
